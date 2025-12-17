@@ -6,6 +6,11 @@ from PyQt6.QtWidgets import (
 QApplication,
 QMainWindow,
 QPushButton,
+QLabel,
+QLineEdit,
+QMainWindow,
+QVBoxLayout,
+QWidget,
 )
 
 window_titles = [
@@ -43,10 +48,25 @@ class MainWindow(QMainWindow):
         if window_title == "Something went wrong":
             self.button.setDisabled(True)
             
+class MainWindow2(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("My App")
+        self.label = QLabel()
+        self.input = QLineEdit()
+        self.input.textChanged.connect(self.label.setText)
+        layout = QVBoxLayout()
+        layout.addWidget(self.input)
+        layout.addWidget(self.label)
+        container = QWidget()
+        container.setLayout(layout)
+        # Set the central widget of the Window.
+        self.setCentralWidget(container)    
+            
 app = QApplication(sys.argv)
 
 # Create a Qt widget, which will be the top window
-window = MainWindow()
+window = MainWindow2()
 window.show()
 
 # start the event loop
