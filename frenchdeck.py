@@ -2,6 +2,9 @@
 #Example 1-1. A deck as a sequence of playing cards 
 
 import collections
+import itertools
+import time
+from threading import Thread, Event 
 
 Card = collections.namedtuple('Card', ['rank', 'suit'])
 
@@ -30,6 +33,18 @@ for card in sorted(deck, key=spades_high):  # doctest: +ELLIPSIS
     print(card)
 
 
+def spin(msg:str, done:Event) -> None:
+    for char in itertools.cycle(r'\|/-'):
+        status=f'\r{char} {msg}'
+        print(status,end='',flush=True) 
+        if done.wait(.1):
+            break
+    blanks = ''*len(status)
+    print(f'\r{blanks}\r',end='')
+
+def slow() -> int:
+    time.sleep(3)
+    return 42
 #Ramalho, Luciano. Fluent Python: Clear, Concise, and Effective Programming (p. 7). O'Reilly Media. Kindle Edition. 
 #Ramalho, Luciano. Fluent Python: Clear, Concise, and Effective Programming (p. 7). O'Reilly Media. Kindle Edition. 
 #Ramalho, Luciano. Fluent Python: Clear, Concise, and Effective Programming (p. 5). O'Reilly Media. Kindle Edition. 
